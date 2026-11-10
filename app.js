@@ -188,7 +188,7 @@ function renderCrc() {
   g += `<text class="axis-title" x="${(L + W - R) / 2}" y="${H - 8}" text-anchor="middle">Facts sent to practitioner review</text><text class="axis-title" transform="translate(14 ${(T + H - B) / 2}) rotate(-90)" text-anchor="middle">Facts wrong and unreviewed</text>`;
   const line = (arr, key) => { let d = '', on = false; for (const p of arr) { if (p[key] > yMax) { on = false; continue; } d += `${on ? 'L' : 'M'}${X(p.share).toFixed(1)} ${Y(p[key]).toFixed(1)}`; on = true; } return d; };
   const top0 = rc[rc.length - 1];
-  g += `<text class="tick" x="${L + 8}" y="${T + 14}">↑ With no review, ${pct(top0.loss, 0)} of facts would be wrong</text>`;
+  g += `<text class="tick" x="${W - R - 8}" y="${T + 14}" text-anchor="end">With no review, ${pct(top0.loss, 0)} of facts would be wrong (curve starts off-scale)</text>`;
   g += `<path d="${line(bound, 'b')}" fill="none" stroke="#b4b4b4" stroke-dasharray="4 4"/>`;
   g += `<path d="${line(rc, 'loss')}" fill="none" stroke="${COLORS[r.model]}" stroke-width="2"/>`;
   g += `<line x1="${L}" x2="${W - R}" y1="${Y(state.alpha)}" y2="${Y(state.alpha)}" stroke="#fcc945" stroke-dasharray="6 4"/><text class="tick" x="${W - R - 4}" y="${Y(state.alpha) - 7}" text-anchor="end" fill="#fcc945">Limit ${pct(state.alpha, 0)}</text>`;
