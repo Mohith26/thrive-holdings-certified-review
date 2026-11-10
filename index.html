@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<title>Certified review · Individual tax prep · Measuring AI performance on real-world work (concept)</title>
+<meta name="description" content="Unofficial concept: practitioner review cost at a guaranteed escaped-error rate, computed with conformal risk control, for the Thrive Holdings individual tax prep benchmark.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="#" aria-label="Thrive Holdings">
+    <svg viewBox="0 0 41 26" aria-hidden="true"><defs><linearGradient id="mk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9a9a9a"/><stop offset=".55" stop-color="#5c5c5c"/><stop offset="1" stop-color="#3a3a3a"/></linearGradient></defs><path d="M21.9 3 9.3 23H0L12.5 3Z" fill="url(#mk)"/><path d="M40.9 3 28.4 23h-9.3L31.6 3Z" fill="url(#mk)"/></svg>
+    <span>Thrive Holdings<br>New York City</span>
+  </a>
+  <div class="clock"><div id="clk-d">&nbsp;</div><div id="clk-t">&nbsp;</div></div>
+  <nav class="site-nav"><div class="row"><a href="#">Home</a><a href="#">About</a><a href="#">News</a></div><div><a href="#">talent@thriveholdings.com</a></div></nav>
+</header>
+
+<nav class="tabs" aria-label="Benchmarks"><button class="active">Individual tax prep</button><button>Helpdesk ticket resolution</button></nav>
+
+<main>
+  <section class="bench-head">
+    <div class="eyebrow">Holdings-IndividualTaxBench</div>
+    <h1>Individual tax prep</h1>
+  </section>
+
+  <div class="filters">
+    <div class="field"><label for="f-model">Model</label><div class="select"><select id="f-model"><option value="">All 13 models</option></select><svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#eee" fill="none" stroke-width="1.2"/></svg></div></div>
+    <div class="field"><label for="f-effort">Reasoning</label><div class="select"><select id="f-effort"><option value="">All reasoning levels</option><option>low</option><option>medium</option><option>high</option><option>xhigh</option><option>max</option></select><svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#eee" fill="none" stroke-width="1.2"/></svg></div></div>
+  </div>
+
+  <!-- NEW: certified review card -->
+  <section class="panel" id="review-card">
+    <div class="panel-pad">
+      <div class="panel-head">
+        <h2>Cost of a reviewed return<span class="new-tag">CONCEPT</span></h2>
+        <div class="controls">
+          <span class="ctl-label">Escaped-error limit</span>
+          <div class="seg" id="seg-alpha"><button data-a="0.02">2%</button><button data-a="0.03" class="on">3%</button><button data-a="0.05">5%</button><button data-a="0.1">10%</button></div>
+          <div class="mini-select"><select id="sel-rate"><option value="65">$65 / hour</option><option value="95" selected>$95 / hour</option><option value="150">$150 / hour</option></select><svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="#eee" fill="none" stroke-width="1.2"/></svg></div>
+        </div>
+      </div>
+      <p class="desc" id="review-desc">Every draft return still goes to a practitioner. Using the 88 benchmark returns as calibration data, conformal risk control sets how much of each return must be reviewed so that, on a new return, the expected share of facts that are wrong and left unreviewed stays under the limit. Totals add model cost to practitioner review time.</p>
+    </div>
+    <div class="cells" id="kpis"><div class="cell"><div class="k">&nbsp;</div><div class="v loading">Computing review plans…</div></div><div class="cell"></div><div class="cell"></div><div class="cell"></div></div>
+    <div class="panel-pad" style="padding-top:6px">
+      <div class="chart" id="chart-main"></div>
+    </div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="panel" id="lb-card">
+    <div class="panel-pad" style="padding-bottom:0">
+      <div class="panel-head"><h2>Review-adjusted leaderboard</h2></div>
+      <table class="lb" id="lb"></table>
+      <div class="lb-note" id="lb-note">Review time, escaped share and facts reviewed are leave-one-return-out averages: each return gets the review plan calibrated on the other 87. Click a row to inspect it below.</div>
+    </div>
+    <div class="expander" id="lb-more" style="margin-top:14px"><span>Show all 50 configurations</span><span>+</span></div>
+  </section>
+
+  <section class="panel" id="crc-card">
+    <div class="panel-pad" style="padding-bottom:0">
+      <div class="who eyebrow" id="crc-who" style="font-size:12px"></div>
+      <h2 id="crc-title">How the limit is enforced</h2>
+      <p class="desc" id="crc-desc"></p>
+    </div>
+    <div class="split">
+      <div><div class="chart" id="chart-rc" style="margin-top:6px"></div></div>
+      <div class="facts" id="crc-facts"></div>
+    </div>
+  </section>
+
+  <section class="example" id="plan-card"></section>
+
+  <section class="prose">
+    <h2>Methodology</h2>
+    <h4>What this adds</h4>
+    <p>The leaderboard reports how much of a return a configuration gets right. The operating question is what it costs to ship a correct return: model spend plus the practitioner time needed to catch what the model got wrong. Reviewing everything is safe but slow; reviewing only what the agent flags is fast but has no guarantee. This view prices each configuration at a <b>guaranteed</b> escaped-error rate.</p>
+    <h4>Review plans</h4>
+    <p>A return is split into the sections a practitioner already reviews one at a time (each W-2, 1099, K-1, Schedule C business, Schedule E property, and so on). Reviewing a section catches its wrong, missing and extra facts, including facts the model never reported. A risk model scores each section from signals available before anyone checks the answer: the share of the section's source pages the draft never cited, disagreement with a second run from GPT-6 Luna at medium reasoning (the page's own cost baseline), whether the agent left an open item, document quality, whether values must be reconciled across files, whether the entity is new this year, the section type and its size. It is a logistic regression trained on last season's field-level review rows, not on these 88 returns.</p>
+    <h4>The guarantee</h4>
+    <p>For a threshold λ, the practitioner reviews every section with risk above λ and accepts the rest as drafted. The loss on return <i>i</i> is the share of its facts that are wrong, missing or extra in accepted sections, with the same denominator as the benchmark's accuracy. It only grows as λ rises. Conformal risk control picks</p>
+    <div class="formula">λ̂ = max { λ : ( Σᵢ Lᵢ(λ) + 1 ) / ( n + 1 ) ≤ α },   n = 88 calibration returns</div>
+    <p>If benchmark returns and future returns are exchangeable, the expected escaped share on a new return is at most α, whatever the quality of the risk model. A better risk model only buys a cheaper plan. The +1 is the price of a finite calibration set: with 88 returns it costs about 1.1 percentage points of the limit, which is why the strict settings review most sections.</p>
+    <h4>Data in this concept</h4>
+    <p>Accuracy, precision, recall and cost per return are the published values on this page. Fact-level outcomes, section structure, review times and the risk signals are <b>synthetic</b>: a seeded generator creates 88 returns with the published complexity mix (38 simple, 28 medium, 19 complex, 3 ultra-complex) and solves, per configuration, for error thresholds that reproduce its published per-return accuracy, precision and recall to within 0.15 points. The review numbers therefore illustrate the method; they are not measurements of these models.</p>
+    <h4>Limitations</h4>
+    <p>The guarantee is on average over returns, not for every return; a per-return high-probability version (Learn then Test) needs more calibration returns. Exchangeability fails if next season's mix differs, so the calibration set should be refreshed from recent practitioner review rows. Practitioner review is treated as perfect, and every fact counts equally regardless of its dollar impact.</p>
+  </section>
+
+  <section class="disclaimer">
+    <a href="#">Hide disclaimer</a>
+    <p>Unofficial concept demo by Mohith Gajjela. Not affiliated with Thrive Holdings. Published benchmark figures are from evals.thriveholdings.com; all fact-level and review data are synthetic.</p>
+    <p>Model and harness names are used solely for identification. Review times, escaped-error shares and rankings shown here come from synthetic data generated to match published aggregates and do not describe the real behavior of any model.</p>
+  </section>
+</main>
+<footer class="site-foot"><svg viewBox="0 0 40.929 20"><path d="M21.8785 0L9.32883 20H0L12.5498 0H21.8785Z" fill="#fff"/><path d="M40.929 0L28.3792 20H19.0504L31.6063 0H40.929Z" fill="#fff"/></svg><span>Unofficial concept demo by Mohith Gajjela. Not affiliated with Thrive Holdings. Synthetic data.</span></footer>
+<div class="tooltip" id="tip"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
